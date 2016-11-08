@@ -1,0 +1,18 @@
+Dropbox - FUSE 
+=============================
+
+Prerequisite
+------------
+
+Dropbox - FUSE use the following C libraries:
+    - liboauth: http://liboauth.sourceforge.net/
+    - curl    : http://curl.haxx.se/
+    - jansson : http://www.digip.org/jansson/
+    - fuse    : http://fuse.sourceforge.net/
+
+How to use
+----------
+
+Compile:    $ make
+Mount  :    $ ./bin/dropboxFuse MOUNT_POINT -c CACHE_ROOT -t TOKEN_FILE [-l LOG_FILE]
+Unmount:    $ fusermount -u MOUNT_POINT
