@@ -3,7 +3,6 @@
  * \brief   Unofficial C dropbox API.
  * \author  Ashwin Sankar
  * \version 1.0
- * \date    29.10.2013
  */
 
 #define _GNU_SOURCE

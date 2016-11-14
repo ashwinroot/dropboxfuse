@@ -3,7 +3,6 @@
  * \brief   Hash table library header.
  * \author  ashwin sankar
  * \version 2.0
- * \date    06.01.2014
  */
 
 #ifndef __HTBL_H

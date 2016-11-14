@@ -3,7 +3,6 @@
  * \brief   Some useful functions.
  * \author  ashwin sankar
  * \version 1.0
- * \date    15.01.2014
  */
 
 #ifndef __UTILS_H

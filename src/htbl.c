@@ -3,7 +3,6 @@
  * \brief   Hash table library source code.
  * \author  ashwin sankar
  * \version 2.0
- * \date    06.01.2014
  */
 
 #include "htbl.h"
@@ -94,7 +93,7 @@ htbl* htblCreate(unsigned int size) {
 }
 
 void htblDestroy(htbl* tbl, void(*freeData)(void* data, void* arg), void* arg) {
-	for (int i = 0; i < tbl->size; i++) 
+	for (int i = 0; i < tbl->size; i++)
 		for (struct entryNode *next, *n = tbl->matrix[i]; n != NULL; n = next) {
 			next = n->next;
 			free(n->pair.key);

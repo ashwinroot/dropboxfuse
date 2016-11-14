@@ -3,7 +3,6 @@
  * \brief   Common function library for dropbox library.
  * \author  Ashwin Sankar
  * \version 1.0
- * \date    29.10.2013
  */
 
 #ifndef DROPBOX_UTILS_H

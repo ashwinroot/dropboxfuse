@@ -3,7 +3,6 @@
  * \brief   Json parsing library for dropbox library structures.
  * \author  Ashwin Sankar
  * \version 1.0
- * \date    29.10.2013
  */
 
 #define _GNU_SOURCE
@@ -59,7 +58,7 @@ static bool* drbJsonGetBool(json_t* root, char* key) {
 		if((pBool = malloc(sizeof(bool))) != NULL) {
 		   *pBool = value;
 		}
-	}  	     
+	}
 	return pBool;
 }
 
@@ -108,7 +107,7 @@ static void drbJsonParseMetadata(json_t *root, drbMetadata* meta) {
 		meta->isDeleted   = drbJsonGetBool(root, "is_deleted");
 		meta->mimeType    = drbJsonGetStr (root, "mime_type");
 		meta->revision    = drbJsonGetInt (root, "revision");
-		
+
 		json_t *contents = json_object_get(root, "contents");
 		if (contents) {
 			if((meta->contents = malloc(sizeof(drbMetadataList))) != NULL) {
@@ -125,21 +124,21 @@ static void drbJsonParseMetadata(json_t *root, drbMetadata* meta) {
  * \return	void
  */
 static void drbJsonParseDeltaEntry(json_t *root, drbDeltaEntry* entry) {
-	
-	if (root && json_is_array(root) && json_array_size(root) == 2) {	
+
+	if (root && json_is_array(root) && json_array_size(root) == 2) {
 		// Get path
 		json_t* path = json_array_get(root, 0);
 		if (path && json_is_string(path))
 			entry->path = strdup(json_string_value(path));
-		
+
 		// Get metadata
 		json_t* meta = json_array_get(root, 1);
 		if (meta) {
 			if ((entry->metadata = malloc(sizeof(drbMetadata))) != NULL) {
 				drbJsonParseMetadata(meta, entry->metadata);
 			}
-		}		
-	}	
+		}
+	}
 }
 
 
@@ -192,7 +191,7 @@ drbMetadataList* drbStrParseMetadataList(char* str) {
 			drbJsonParseMetadataList(root, list);
 		}
 	}
-	json_decref(root);	
+	json_decref(root);
 	return list;
 }
 
@@ -229,7 +228,7 @@ drbAccountInfo* drbParseAccountInfo(char* str) {
 			info->uid          = drbJsonGetInt(root, "uid");
 			info->country      = drbJsonGetStr(root, "country");
 			info->email        = drbJsonGetStr(root, "email");
-			
+
 			json_t *quota = json_object_get(root, "quota_info");
 			if(quota) {
 				info->quotaInfo.datastores = drbJsonGetInt(quota, "datastores");
@@ -252,13 +251,13 @@ drbAccountInfo* drbParseAccountInfo(char* str) {
 drbDelta* drbParseDelta(char* str) {
 	drbDelta* delta = NULL;
 	json_t *root = json_loads(str, 0, NULL);
-	
+
 	if (root) {
 		if((delta = calloc(1, sizeof(drbDelta))) != NULL) {
 			delta->reset   = drbJsonGetBool(root, "reset");
 			delta->cursor  = drbJsonGetStr (root, "cursor");
 			delta->hasMore = drbJsonGetBool(root, "has_more");
-			
+
 			json_t *entries = json_object_get(root, "entries");
 
 			if (entries && json_is_array(entries)) {

@@ -3,11 +3,10 @@
  * \brief   Unofficial C dropbox API.
  * \author  Ashwin Sankar
  * \version 1.0
- * \date    29.10.2013
  */
 
 #ifndef DROPBOX_H
-#define DROPBOX_H	
+#define DROPBOX_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -48,8 +47,8 @@ typedef struct {
  * \struct	drbAccountInfo
  * \breif	Dropbox account informations.
  *
- * Missing fields in the server answer are left blank with NULL value. 
- * Check https://www.dropbox.com/developers/core/docs#account-info for more 
+ * Missing fields in the server answer are left blank with NULL value.
+ * Check https://www.dropbox.com/developers/core/docs#account-info for more
  * details about these fields.
  *
  * Must be freed with drbDestroyAccountInfo.
@@ -70,9 +69,9 @@ typedef struct {
 
 /*!
  * \struct	drbMetadataList
- * \breif	Dropbox file or folder metadata. 
- * 
- * Missing fields in the server answer are left blank with NULL value. 
+ * \breif	Dropbox file or folder metadata.
+ *
+ * Missing fields in the server answer are left blank with NULL value.
  * Check https://www.dropbox.com/developers/core/docs#metadata for more details
  * about these fields.
  *
@@ -105,10 +104,10 @@ struct drbMetadataList{
 
 /*!
  * \struct	drbLink
- * \breif	Dropbox temporary link to a file. 
+ * \breif	Dropbox temporary link to a file.
  *
- * Missing fields in the server answer are left blank with NULL value. 
- * Check https://www.dropbox.com/developers/core/docs#shares for more details 
+ * Missing fields in the server answer are left blank with NULL value.
+ * Check https://www.dropbox.com/developers/core/docs#shares for more details
  * about these fields.
  *
  * Must be freed with drbDestroyLink.
@@ -122,7 +121,7 @@ typedef struct {
  * \struct	drbLink
  * \breif	Dropbox file copy reference.
  *
- * Missing fields in the server answer are left blank with NULL value. 
+ * Missing fields in the server answer are left blank with NULL value.
  * Check https://www.dropbox.com/developers/core/docs#copy_ref for more details
  * about these fields.
  *
@@ -137,7 +136,7 @@ typedef struct {
  * \struct	drbDeltaEntry
  * \breif	Dropbox delta entry.
  *
- * Missing fields in the server answer are left blank with NULL value. 
+ * Missing fields in the server answer are left blank with NULL value.
  * Check https://www.dropbox.com/developers/core/docs#delta for more details
  * about these fields.
  */
@@ -150,7 +149,7 @@ typedef struct {
  * \struct	drbDelta
  * \breif	Dropbox delta informations.
  *
- * Missing fields in the server answer are left blank with NULL value. 
+ * Missing fields in the server answer are left blank with NULL value.
  * Check https://www.dropbox.com/developers/core/docs#delta for more details
  * about these fields.
  *
@@ -169,14 +168,14 @@ typedef struct {
 /*!
  * \breif Function options and expected arguement type.
  *
- * Depending on the function, an option is either: 
+ * Depending on the function, an option is either:
  *   1. illegal
  *   2. optional
  *   3. required by the dropbox server
  *   4. required by the function itself
- * 
+ *
  * If this last kind of options are forgotten, the DRBERR_MISSING_OPT error code
- * is returned by the function. Otherwise, for illegal options or the 
+ * is returned by the function. Otherwise, for illegal options or the
  * forgetting of an option of the third kind, an http error is returned.
  *
  */
@@ -207,7 +206,7 @@ enum {
 };
 
 /*!
- * Error code returned by functions. However, dropbox http errors codes (>100)  
+ * Error code returned by functions. However, dropbox http errors codes (>100)
  * are not defined here. Check https://www.dropbox.com/developers/core/docs
  * under "Standard API errors" for more details about these kind of errors.
  */
@@ -229,7 +228,7 @@ typedef enum {
 
 
 /*!
- * \brief   Sets up the programm environment that dropbox library needs. 
+ * \brief   Sets up the programm environment that dropbox library needs.
  * \return	void
  */
 void drbInit();
@@ -238,8 +237,8 @@ void drbInit();
  * \brief   Release ressources acquired by drbInit.
  * \return	void
  */
-void drbCleanup();	
-	
+void drbCleanup();
+
 /*!
  * \brief	Create and initilize a drbClient.
  * \param	cKey      consumer key (Client credentials)
@@ -254,9 +253,9 @@ drbClient* drbCreateClient(char* cKey, char* cSecret, char* tKey, char* tSecret)
  * \brief	Obtain the request token (temporary credentials).
  *
  * Achieves the 1st step of OAuth 1.0 protocol by obtaining the temporary creds.
- * The token and its fields lifetime is only guaranteed until the next API 
+ * The token and its fields lifetime is only guaranteed until the next API
  * function call. If the user code need them afterward, they must be duplicated.
- * 
+ *
  * \param	cli   client to authorize dropbox access.
  * \return	obtained request token (must NOT be freed or modified by caller).
  */
@@ -266,7 +265,7 @@ drbOAuthToken* drbObtainRequestToken(drbClient* cli);
  * \brief	Build the url for client accces authorization.
  *
  * Build url for 2nd step of OAuth 1.0 protocol (Resource Owner Authorization).
- * 
+ *
  * \param	cli   client to authorize dropbox access.
  * \return	url to authorize client to acces the user dropbox
  */
@@ -276,9 +275,9 @@ char* drbBuildAuthorizeUrl(drbOAuthToken* reqTok);
  * \brief	Obtain the access token (Token credentials).
  *
  * Achieves the last step of OAuth 1.0 protocol by obtaining the token creds.
- * The token and its fields lifetime is only guaranteed until the next API 
+ * The token and its fields lifetime is only guaranteed until the next API
  * function call. If the user code need them afterward, they must be duplicated.
- * 
+ *
  * \param	cli   client to authorize dropbox access.
  * \return	obtained access token (must NOT be freed or modified by caller)
  */
@@ -321,7 +320,7 @@ int drbGetMetadata(drbClient* cli, drbMetadata** meta, ...);
  *                       -# DRBOPT_PATH (required)
  *                       -# DRBOPT_IO_DATA, e.i. FILE*  (required)
  *                       -# DRBOPT_IO_FUNC, e.i. fwrite (required)
- *                       -# DRBOPT_REV 
+ *                       -# DRBOPT_REV
  * \return	error code (DRBERR_XXX or http error returned by the Dropbox server)
  */
 int drbGetFile(drbClient* cli, drbMetadata** meta, ...);
@@ -363,7 +362,7 @@ int drbSearch(drbClient* cli, drbMetadataList** list, ...);
  *                       -# DRBOPT_PATH (required)
  *                       -# DRBOPT_IO_DATA, e.i. FILE*  (required)
  *                       -# DRBOPT_IO_FUNC, e.i. fwrite (required)
- *                       -# DRBOPT_FORMAT 
+ *                       -# DRBOPT_FORMAT
  *                       -# DRBOPT_SIZE
  * \return	error code (DRBERR_XXX or http error returned by the Dropbox server)
  */
@@ -508,6 +507,6 @@ void drbDestroyDelta(drbDelta* delta, bool withMetadata);
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
-		
-	
+
+
 #endif /* DROPBOX_H */

@@ -3,7 +3,6 @@
  * \brief   Common function library for dropbox library.
  * \author  Ashwin Sankar
  * \version 1.0
- * \date    29.10.2013
  */
 
 #define _GNU_SOURCE
@@ -37,27 +36,27 @@ void* drbRealloc(void* ptr, size_t size) {
 char* drbGetHeaderFieldContent(const char* field, char* header) {
 	char* content = NULL;
 	char* fieldLine = strstr(header, field); // find field line
-	
+
 	if (fieldLine && (fieldLine == header || *(fieldLine-1) == '\n')) {
 		fieldLine += strlen(field) + 1; // Get field content starting point
-		
+
 		// Measure the field size
 		int length = 0;
 		while (fieldLine[length] && fieldLine[length] != '\n' && fieldLine[length] != '\r')
 			length++;
-		
+
 		// Create a copy of the field content
 		if((content = malloc(length + 1)) != NULL)
 			strncpy(content, fieldLine, length);
 		content[length] = '\0';
 	}
-	
+
 	return content;
 }
 
 size_t drbMemoryWrite(const void *ptr, size_t size, size_t count, drbMemory *mem) {
 	size_t realSize = size * count;
-	
+
 	if((mem->data = drbRealloc(mem->data, mem->size + realSize + 1)) != NULL) {
 		memcpy(mem->data + mem->size, ptr, realSize);
 		mem->size += realSize;

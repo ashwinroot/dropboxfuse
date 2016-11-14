@@ -3,7 +3,6 @@
  * \brief   Json parsing library for dropbox library structures.
  * \author  Ashwin Sankar
  * \version 1.0
- * \date    29.10.2013
  */
 
 #ifndef DROPBOX_JSON_H

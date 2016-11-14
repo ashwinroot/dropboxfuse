@@ -3,7 +3,6 @@
  * \brief   Dropbox Fuse file system.
  * \author  Ashwin Sankar
  * \version 1.0
- * \date    26.01.2014
  * \note    Mount file system with the compiled program.
  *          Unmount it with fusermount -u command.
  */
